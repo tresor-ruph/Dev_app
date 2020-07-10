@@ -4,9 +4,13 @@
 package Main;
 
 /**
- * @author treso
+ * @author tresor
  *
  */
+
+import modele.Partie;
+import controleurs.Controleur;
+import vues.Console;
 public class Main {
 
 	/**
@@ -14,7 +18,12 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-System.out.println("test2");
+		
+		
+		Partie model = new Partie();
+		Controleur controllConsole = new Controleur(model);
+		Console vueConsole = new Console(model, controllConsole);
 	}
+	
 
 }
