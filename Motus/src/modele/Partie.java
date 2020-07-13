@@ -9,10 +9,11 @@ import java.util.Scanner;
 /**
  * @author tresor
  * 
- * @param mot   : String  : represente le mot a definer
- * @param mot2  : String  : contient le mot entrer par l'utilisateur
- * @param verif : boolean : boolean permettant de verifier la longeur du mot entrer par l'utilisateur
- * class Partie servira de la classe principal du package modele et sera donc la class a observer
+ * @param mot   : String : represente le mot a definer
+ * @param mot2  : String : contient le mot entrer par l'utilisateur
+ * @param verif : boolean : boolean permettant de verifier la longeur du mot
+ *              entrer par l'utilisateur class Partie servira de la classe
+ *              principal du package modele et sera donc la class a observer
  *
  */
 public class Partie extends Observable {
@@ -24,21 +25,35 @@ public class Partie extends Observable {
 	public void setLen(int len) {
 		this.len = len;
 	}
-
+	
 	public String mot = "banane";
 	public String mot2;
 	public boolean verif = true;
 	public int len = mot.length();
+	public String mess;
+	public char[] index = new char[len];
 	
+
+	public String getMess() {
+		return mess;
+	}
+
+	public void setMess(String mess) {
+		this.mess = mess;
+
+	}
+
 	/**
 	 * permet de recuperer la valeur de verif
 	 */
-	 public boolean isVerif() {
+	public boolean isVerif() {
 		return verif;
 	}
-	 /**
-	  * permet de modifier la valeur de verif
-	  */
+
+	/**
+	 * @param veriif : boolean
+	 * 
+	 */
 	public void setVerif(boolean verif) {
 		this.verif = verif;
 	}
@@ -46,9 +61,12 @@ public class Partie extends Observable {
 	public String getMot2() {
 		return mot2;
 	}
-
+	/**
+	 * @param mot2 : String
+	 */
 	public void setMot2(String mot2) {
 		this.mot2 = mot2;
+		this.word();
 		setChanged();
 		notifyObservers();
 	}
@@ -57,19 +75,20 @@ public class Partie extends Observable {
 		return mot;
 	}
 
-	public void setMot(String mot) {
-		this.mot = mot;
-		
-	}
 	/**
-	 * cette methode verifie si le mot entre par l'utilisateur est bien le mot a definer
+	 * Cette methode permet va comparer le mot a definer a celui entre par l'utilisateur
+	 * 
 	 */
-	
 
+	public void word() {
 
-	public static void main(String[] args) {
-		Partie mod = new Partie();
-		
-		
-		  }
+		if (this.getMot().equalsIgnoreCase(this.getMot2())) {
+			this.setMess("reussi");
+
+		} else {
+			this.setMess("echoue");
+
+		}
+	}
+
 }
