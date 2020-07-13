@@ -25,14 +25,13 @@ public class Partie extends Observable {
 	public void setLen(int len) {
 		this.len = len;
 	}
-	
+
 	public String mot = "banane";
 	public String mot2;
 	public boolean verif = true;
 	public int len = mot.length();
 	public String mess;
 	public char[] index = new char[len];
-	
 
 	public String getMess() {
 		return mess;
@@ -61,6 +60,7 @@ public class Partie extends Observable {
 	public String getMot2() {
 		return mot2;
 	}
+
 	/**
 	 * @param mot2 : String
 	 */
@@ -76,7 +76,8 @@ public class Partie extends Observable {
 	}
 
 	/**
-	 * Cette methode permet va comparer le mot a definer a celui entre par l'utilisateur
+	 * Cette methode permet va comparer le mot a definer a celui entre par
+	 * l'utilisateur
 	 * 
 	 */
 
@@ -86,9 +87,12 @@ public class Partie extends Observable {
 			this.setMess("reussi");
 
 		} else {
-			this.setMess("echoue");
+			for (int i = 0; i < this.getLen(); i++) {
+				for (int j = 0; j < this.getLen(); j++) {
 
+				}
+			}
 		}
-	}
 
+	}
 }

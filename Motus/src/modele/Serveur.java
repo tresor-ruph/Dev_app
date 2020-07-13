@@ -11,13 +11,17 @@ import java.sql.Statement;
 
 
 /**
- * @author treso
+ * @author tresor
  * @params host : String : hote hebergent la BDD
  * @params user : String : utilisateur
  * @params passwd : String : mot de passe
  *
  */
 public class Serveur {
+	int id;
+	String mot;
+	String signification;
+	String indice;
 	
 	  private Connection connect = null;
 	  private Statement statement = null;
@@ -55,14 +59,14 @@ public class Serveur {
 	private void writeResultSet(ResultSet resultSet) throws SQLException {
 		  
 	    while (resultSet.next()) {
-	      int id = resultSet.getInt("id");
-	      String mot = resultSet.getString("mot");
-	      String signification = resultSet.getString("signification");
-	      String indice = resultSet.getString("indice");
-	      System.out.println("indice: " + id);
-	      System.out.println("mot: " + mot);
-	      System.out.println("signification: " + signification);
-	      System.out.println("indice: " + indice);
+	      this.id= resultSet.getInt("id");
+	      this.mot = resultSet.getString("mot");
+	      this.signification = resultSet.getString("signification");
+	     this.indice = resultSet.getString("indice");
+	      System.out.println("indice: " + this.id);
+	      System.out.println("mot: " + this.mot);
+	      System.out.println("signification: " + this.signification);
+	      System.out.println("indice: " + this.indice);
 	    }
 	  }
 
