@@ -16,7 +16,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		Partie model = new Partie();
-		model.word();
+		//model.word();
 		Controleur controllConsole = new Controleur(model);
 		Console vueConsole = new Console(model, controllConsole);
 		vueConsole.afficher();
