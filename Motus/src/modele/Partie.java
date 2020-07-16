@@ -17,6 +17,16 @@ import java.util.Scanner;
  *
  */
 public class Partie extends Observable {
+	
+	public static int chance = 5;
+
+	public static int getChance() {
+		return chance;
+	}
+
+	public static void setChance() {
+		Partie.chance = --chance;
+	}
 
 	public int getLen() {
 		return len;
@@ -101,6 +111,9 @@ public class Partie extends Observable {
 	public void word() {
 
 		if (this.getMot().equalsIgnoreCase(this.getMot2())) {
+			for(int i =0; i < this.getLen(); i++) {
+				this.setIndex(i, this.getMot().charAt(i));
+			}
 			this.setMess("reussi");
 
 		} else {
@@ -127,7 +140,9 @@ public class Partie extends Observable {
 					}
 				}
 			}
-			System.out.println(this.index[3]);
+		}
+		if (this.getChance() == 0) {
+			this.setMess("termine");
 		}
 
 	}

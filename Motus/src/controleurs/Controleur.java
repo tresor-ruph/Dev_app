@@ -31,6 +31,9 @@ public class Controleur {
 	public String getMessag() {
 		return model.getMess();
 	}
+	public void setChance() {
+		model.setChance();
+	}
 	
 	
 }

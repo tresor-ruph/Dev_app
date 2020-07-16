@@ -28,20 +28,26 @@ public class Console extends Vue implements Observer{
 		System.out.println();
 		
 
-		int j = 5;
 		while(model.getMess() != "termine") {
 		System.out.println("veuillez entrer le mot");
-		System.out.print(model.getMot().charAt(0));
-		for(int i=0; i < model.getLen()-1;i++) {
+		model.setIndex(0, model.getMot().charAt(0));
+		System.out.print(model.index[0]);
+		for(int i=1; i < model.getLen();i++) {
+
+			if((model.index[i] >= 'a')||(model.index[i] >= 'A')) {
+				System.out.print(" "+model.index[i]);
+			}else {	
+				
 			System.out.print(" _ ");
 		}
-		System.out.println("                              nombre de tentative restante ="+j);
+		}
+		System.out.println("                              nombre de tentative restante ="+model.chance);
 		System.out.println();
 		String inputString = sc.nextLine();
 		control.setString(inputString);
-		j = --j;
-
+		control.setChance();
 		}
+		
 	}
 	
 
@@ -50,8 +56,10 @@ public class Console extends Vue implements Observer{
 @Override
 public void update(Observable o, Object arg) {
 	// TODO Auto-generated method stub
-	
-	System.out.println(model.getMess());
+	if(model.getMess() =="reussi") {
+		System.out.println(model.getMess());
+
+	}
 	
 }
 
