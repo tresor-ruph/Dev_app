@@ -15,11 +15,10 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Partie model = new Partie();
-		//model.word();
+		Partie model = new Partie();		
 		Controleur controllConsole = new Controleur(model);
 		Console vueConsole = new Console(model, controllConsole);
-		vueConsole.afficher();
+		
 
 	}
 	

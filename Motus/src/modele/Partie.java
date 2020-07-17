@@ -17,7 +17,7 @@ import java.util.Scanner;
  *
  */
 public class Partie extends Observable {
-	
+
 	public static int chance = 5;
 
 	public static int getChance() {
@@ -28,21 +28,21 @@ public class Partie extends Observable {
 		Partie.chance = --chance;
 	}
 
-	public int getLen() {
-		return len;
-	}
+	/*
+	 * public int getLen() { return len; }
+	 */
 
 	public void setLen(int len) {
-		this.len = len;
+		// this.len = len;
 	}
 
-	public String mot = "teka";
+	public String mot;
+	public String[] dict;
 	public String mot2;
 	public boolean verif = true;
-	public int len = mot.length();
 	public String mess;
-	public char[] index = new char[len];
-	public char[] index2 = new char[len];
+	public char[] index;
+	public char[] index2;
 
 	public char[] getIndex() {
 		return index;
@@ -91,6 +91,12 @@ public class Partie extends Observable {
 	/**
 	 * @param mot2 : String
 	 */
+
+	public void setMot(String mot) {
+		this.mot = mot;
+
+	}
+
 	public void setMot2(String mot2) {
 		this.mot2 = mot2;
 		this.word();
@@ -108,18 +114,41 @@ public class Partie extends Observable {
 	 * 
 	 */
 
+	public void setWord() {
+		int cnt = 0;
+		Serveur serv = new Serveur();
+		try {
+			serv.readDataBase();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.dict = new String[serv.getLib().size()];
+
+		for (String i : serv.getLib().keySet()) {
+			this.dict[cnt] = i;
+			++cnt;
+		}
+
+		this.setMot(this.dict[0]);
+		this.index = new char[this.getMot().length()];
+		this.index2 = new char[this.getMot().length()];
+
+	}
+
 	public void word() {
+		Serveur serv = new Serveur();
 
 		if (this.getMot().equalsIgnoreCase(this.getMot2())) {
-			for(int i =0; i < this.getLen(); i++) {
+			for (int i = 0; i < this.getMot().length(); i++) {
 				this.setIndex(i, this.getMot().charAt(i));
 			}
 			this.setMess("reussi");
 
 		} else {
 			this.setMess(" ");
-			outerloop: for (int i = 0; i < this.getLen(); i++) {
-				innerloop: for (int j = 0; j < this.getLen(); j++) {
+			outerloop: for (int i = 0; i < this.getMot().length(); i++) {
+				innerloop: for (int j = 0; j < this.getMot().length(); j++) {
 					if (this.getMot().charAt(i) == this.getMot2().charAt(j)) {
 						// si il existe des character coommun entre le mot a definer et le mot entre par
 						// l'utilisateur
@@ -134,8 +163,8 @@ public class Partie extends Observable {
 
 						}
 					} else {
-						if (i == this.getLen() - 1 && j == this.getLen() - 1) {
-							//Le joueur n'a trouver aucun character du mot;
+						if (i == this.getMot().length() - 1 && j == this.getMot().length() - 1) {
+							// Le joueur n'a trouver aucun character du mot;
 						}
 					}
 				}

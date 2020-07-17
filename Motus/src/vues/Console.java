@@ -19,7 +19,8 @@ public class Console extends Vue implements Observer{
 	public Console(Partie model, Controleur control) {
 		super(model , control);
 		sc = new Scanner(System.in);
-		
+		model.setWord();
+		this.afficher();
 	}
 	
 	public void afficher() {
@@ -32,7 +33,7 @@ public class Console extends Vue implements Observer{
 		System.out.println("veuillez entrer le mot");
 		model.setIndex(0, model.getMot().charAt(0));
 		System.out.print(model.index[0]);
-		for(int i=1; i < model.getLen();i++) {
+		for(int i=1; i < model.getMot().length();i++) {
 
 			if((model.index[i] >= 'a')||(model.index[i] >= 'A')) {
 				System.out.print(" "+model.index[i]);
@@ -56,10 +57,6 @@ public class Console extends Vue implements Observer{
 @Override
 public void update(Observable o, Object arg) {
 	// TODO Auto-generated method stub
-	if(model.getMess() =="reussi") {
-		System.out.println(model.getMess());
-
-	}
 	
 }
 
