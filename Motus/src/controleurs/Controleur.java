@@ -39,12 +39,12 @@ public class Controleur {
 	}
 
 	public void setChance() {
-		model.setChance();
+		Partie.setChance();
 	}
 
 	public void setWordcnt() {
-		model.setWordIndex();
-		model.setMot(model.dict[model.wordIndex]);
+		Partie.setWordIndex();
+		model.setMot(model.dict[Partie.wordIndex]);
 	}
 
 }
