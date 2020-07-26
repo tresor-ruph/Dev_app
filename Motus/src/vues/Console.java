@@ -32,6 +32,7 @@ public class Console extends Vue implements Observer {
 		System.out.println();
 
 		while (model.getMess() != "termine") {
+			
 			model.setIndex(0, model.getMot().charAt(0));
 			System.out.print("nombre de tentative restante =" + Partie.chance);
 			System.out.println("                                                " + Partie.total + "/" + Partie.end);
@@ -71,6 +72,7 @@ public class Console extends Vue implements Observer {
 
 		if (model.getMess() == "reussi") {
 			System.out.println("reussi");
+		
 		} else if (model.getMess() == "echouer") {
 
 			System.out.println("le mot a trouver etait " + model.getMot());
@@ -81,6 +83,12 @@ public class Console extends Vue implements Observer {
 			System.out.println("BRAVO VOUS AVEZ TROUVE TOUT LES MOTS");
 		} else if ((model.getMess() == "termine") && (Partie.success != Partie.end)) {
 			System.out.println("VOUS AVEZ TROUVE " + Partie.success + " mot(s) sur " + Partie.end);
+		}else if(model.isTimerUp()) {
+			System.out.println("Time UP");
+			System.out.println("le mot a trouver etait " + model.getMot());
+			control.setWordcnt();
+			System.out.println("mot suivant");
+			System.out.println();
 		}
 	}
 

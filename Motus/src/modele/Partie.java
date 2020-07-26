@@ -4,8 +4,9 @@
 package modele;
 
 import java.util.Observable;
-import java.util.Scanner;
-
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.List;
 /**
  * @author tresor
  * 
@@ -18,11 +19,32 @@ import java.util.Scanner;
  */
 @SuppressWarnings("deprecation")
 public class Partie extends Observable {
-	public static int cpt =60;
+	public  boolean timerUp = false;
+	public  boolean isTimerUp() {
+		return timerUp;
+	}
+
+	public  void setTimerUp(boolean timerUp) {
+		this.timerUp = timerUp;
+		setChanged();
+		notifyObservers();
+		System.out.println("test");
+		
+	}
+
+	public static int cpt = 60;
 	public static int chance = 3;
 	public static int success = 0;
 	public static int total = 0;
 	public static int end = 5;
+	public static int wordIndex = 0;
+	public String mot;
+	public String[] dict;
+	public String mot2;
+	public boolean verif = true;
+	public static String mess;
+	public char[] index;
+	public char[] index2;
 
 	public static int getChance() {
 		return chance;
@@ -31,15 +53,6 @@ public class Partie extends Observable {
 	public static void setChance() {
 		Partie.chance = --chance;
 	}
-
-	public static int wordIndex = 0;
-	public String mot;
-	public String[] dict;
-	public String mot2;
-	public boolean verif = true;
-	public String mess;
-	public char[] index;
-	public char[] index2;
 
 	public char[] getIndex() {
 		return index;
@@ -62,7 +75,7 @@ public class Partie extends Observable {
 	}
 
 	public void setMess(String mess) {
-		this.mess = mess;
+		Partie.mess = mess;
 
 	}
 
@@ -120,8 +133,11 @@ public class Partie extends Observable {
 	 */
 
 	public void setWord() {
-		//new Thread(new Timer()).start();
-	
+
+		Timer decomptage = new Timer();
+		Thread t1 = new Thread(decomptage);
+		//t1.start();
+
 		int cnt = 0;
 		Serveur serv = new Serveur();
 		try {
@@ -139,13 +155,22 @@ public class Partie extends Observable {
 
 		this.setMot(this.dict[Partie.wordIndex]);
 		this.index = new char[this.getMot().length()];
-		this.index2 = new char[this.getMot().length()];
+		this.index2 = new char[this.getMot().length()];	
+		this.shuffle(this.dict);
 
 	}
-
+	
+	
+	public void shuffle(String [] x)
+	{
+		
+		List <String> stringList = Arrays.asList(x);
+		Collections.shuffle(stringList);
+		stringList.toArray(x);
+		
+	}
 	@SuppressWarnings("unused")
 	public void word() {
-
 		if (this.getMot().equalsIgnoreCase(this.getMot2())) {
 			for (int i = 0; i < this.getMot().length(); i++) {
 				this.setIndex(i, this.getMot().charAt(i));
@@ -155,7 +180,6 @@ public class Partie extends Observable {
 			++Partie.total;
 			++Partie.wordIndex;
 			this.setMot(this.dict[Partie.wordIndex]);
-			// this.setMess("echouer");
 			Partie.chance = 3;
 			this.index = new char[this.getMot().length()];
 			this.index2 = new char[this.getMot().length()];
@@ -184,7 +208,7 @@ public class Partie extends Observable {
 					}
 				}
 			}
-			
+
 		}
 		if (Partie.getChance() == 0) {
 
@@ -197,30 +221,67 @@ public class Partie extends Observable {
 
 		}
 		if (Partie.total == Partie.end) {
+			++Partie.total;
+
 			this.setMess("termine");
 		}
 
+	}
+
+	@Override
+	public String toString() {
+		return "Partie [dict=" + Arrays.toString(dict) + "]";
 	}
 
 	private class Timer implements Runnable {
 
 		@Override
 		public void run() {
-
-			for (int i = 60; i > 0; i--) {
-				--Partie.cpt;
-				System.out.println(Partie.cpt);
+			Partie mod = new Partie();
+			int cpt2 = 60;
+			boolean exit = false;
+			while (!exit) {
+				--cpt2;
+				System.out.println(cpt2);
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			
+
+				
+
+				if ((Partie.mess == "reussi") || (Partie.mess == "echouer")) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					cpt2 = 60;
+					Partie.mess = " ";
+				} else if (Partie.mess == "termine") {
+					exit = true;
+					System.out.println("Thread stopped");
+
+
+				} else if (cpt2 == 50) {
+					mod.setTimerUp(true); 
+					
+					cpt2 = 60;
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+
+					}
+
+				}
 
 			}
 
 		}
 
 	}
-
 }
