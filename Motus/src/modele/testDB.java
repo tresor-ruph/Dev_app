@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import junit.framework.Assert;
 
+@SuppressWarnings("unused")
 class testDB {
 
 	@SuppressWarnings("deprecation")

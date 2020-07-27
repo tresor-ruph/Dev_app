@@ -136,7 +136,7 @@ public class Partie extends Observable {
 
 		Timer decomptage = new Timer();
 		Thread t1 = new Thread(decomptage);
-		//t1.start();
+	//	 t1.start();
 
 		int cnt = 0;
 		Serveur serv = new Serveur();
