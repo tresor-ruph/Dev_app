@@ -26,9 +26,8 @@ public class Partie extends Observable {
 
 	public  void setTimerUp(boolean timerUp) {
 		this.timerUp = timerUp;
-		setChanged();
-		notifyObservers();
-		System.out.println("test");
+		//setChanged();
+		//notifyObservers();
 		
 	}
 
@@ -43,8 +42,8 @@ public class Partie extends Observable {
 	public String mot2;
 	public boolean verif = true;
 	public static String mess;
-	public char[] index;
-	public char[] index2;
+	public static char[] index;
+	public static char[] index2;
 
 	public static int getChance() {
 		return chance;
@@ -59,7 +58,7 @@ public class Partie extends Observable {
 	}
 
 	public void setIndex(int i, char j) {
-		this.index[i] = j;
+		Partie.index[i] = j;
 	}
 
 	public char[] getIndex2() {
@@ -67,7 +66,7 @@ public class Partie extends Observable {
 	}
 
 	public void setIndex2(int i, char j) {
-		this.index2[i] = j;
+		Partie.index2[i] = j;
 	}
 
 	public String getMess() {
@@ -120,6 +119,7 @@ public class Partie extends Observable {
 		this.word();
 		setChanged();
 		notifyObservers();
+		
 	}
 
 	public String getMot() {
@@ -154,8 +154,8 @@ public class Partie extends Observable {
 		}
 
 		this.setMot(this.dict[Partie.wordIndex]);
-		this.index = new char[this.getMot().length()];
-		this.index2 = new char[this.getMot().length()];	
+		Partie.index = new char[this.getMot().length()];
+		Partie.index2 = new char[this.getMot().length()];	
 		this.shuffle(this.dict);
 
 	}
@@ -181,8 +181,8 @@ public class Partie extends Observable {
 			++Partie.wordIndex;
 			this.setMot(this.dict[Partie.wordIndex]);
 			Partie.chance = 3;
-			this.index = new char[this.getMot().length()];
-			this.index2 = new char[this.getMot().length()];
+			Partie.index = new char[this.getMot().length()];
+			Partie.index2 = new char[this.getMot().length()];
 
 		} else {
 			this.setMess(" ");
@@ -216,8 +216,8 @@ public class Partie extends Observable {
 			Partie.chance = 3;
 			++Partie.total;
 			// this.setMot(this.dict[this.wordIndex]);
-			this.index = new char[this.getMot().length()];
-			this.index2 = new char[this.getMot().length()];
+			Partie.index = new char[this.getMot().length()];
+			Partie.index2 = new char[this.getMot().length()];
 
 		}
 		if (Partie.total == Partie.end) {

@@ -20,6 +20,7 @@ public class Console extends Vue implements Observer {
 		super(model, control);
 		sc = new Scanner(System.in);
 		model.setWord();
+		
 		this.afficher();
 	}
 
@@ -38,11 +39,11 @@ public class Console extends Vue implements Observer {
 			System.out.println("                                                " + Partie.total + "/" + Partie.end);
 
 			System.out.println();
-			System.out.print(model.index[0]);
+			System.out.print(Partie.index[0]);
 			for (int i = 1; i < model.getMot().length(); i++) {
 
-				if ((model.index[i] >= 'a') || (model.index[i] >= 'A')) {
-					System.out.print(" " + model.index[i]);
+				if ((Partie.index[i] >= 'a') || (Partie.index[i] >= 'A')) {
+					System.out.print(" " + Partie.index[i]);
 				} else {
 
 					System.out.print(" _ ");
