@@ -8,7 +8,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author tresor
@@ -23,7 +26,7 @@ public class Serveur {
 	String mot;
 	String signification;
 	String indice;
-
+	public String[] dict;
 	public HashMap<String, String> getLib() {
 		return lib;
 	}
@@ -110,6 +113,32 @@ public class Serveur {
 
 		}
 	}
+	
+	public void shuffle(String[] x) {
+
+		List<String> stringList = Arrays.asList(x);
+		Collections.shuffle(stringList);
+		stringList.toArray(x);
+
+	}
+	public void initWord() {
+		int cnt = 0;
+		try {
+			this.readDataBase();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.dict = new String[this.getLib().size()];
+
+		for (String i : this.getLib().keySet()) {
+			this.dict[cnt] = i;
+			++cnt;
+		}
+		this.shuffle(this.dict);
+	}
+	
+	
 
 	public static void main(String[] args) throws Exception {
 		Serveur BDD = new Serveur();

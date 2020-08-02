@@ -4,9 +4,13 @@
 package modele;
 
 import java.util.Observable;
+
+import vues.Gui;
+
 import java.util.Collections;
 import java.util.Arrays;
 import java.util.List;
+
 /**
  * @author tresor
  * 
@@ -19,20 +23,27 @@ import java.util.List;
  */
 @SuppressWarnings("deprecation")
 public class Partie extends Observable {
-	public  boolean timerUp = false;
-	public  boolean isTimerUp() {
+	public Partie() {
+		Serveur serv = new Serveur();
+		serv.initWord();
+		this.dict = serv.dict;
+	}
+
+	public boolean timerUp = false;
+
+	public boolean isTimerUp() {
 		return timerUp;
 	}
 
-	public  void setTimerUp(boolean timerUp) {
+	public void setTimerUp(boolean timerUp) {
 		this.timerUp = timerUp;
-		//setChanged();
-		//notifyObservers();
-		
+		// setChanged();
+		// notifyObservers();
+
 	}
 
 	public static int cpt = 60;
-	public static int chance = 3;
+	public static int chance = 5;
 	public static int success = 0;
 	public static int total = 0;
 	public static int end = 5;
@@ -119,7 +130,8 @@ public class Partie extends Observable {
 		this.word();
 		setChanged();
 		notifyObservers();
-		
+		++Gui.index;
+
 	}
 
 	public String getMot() {
@@ -136,51 +148,37 @@ public class Partie extends Observable {
 
 		Timer decomptage = new Timer();
 		Thread t1 = new Thread(decomptage);
-	//	 t1.start();
-
-		int cnt = 0;
-		Serveur serv = new Serveur();
-		try {
-			serv.readDataBase();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		this.dict = new String[serv.getLib().size()];
-
-		for (String i : serv.getLib().keySet()) {
-			this.dict[cnt] = i;
-			++cnt;
-		}
+		// t1.start();
 
 		this.setMot(this.dict[Partie.wordIndex]);
+
 		Partie.index = new char[this.getMot().length()];
-		Partie.index2 = new char[this.getMot().length()];	
-		this.shuffle(this.dict);
+		Partie.index2 = new char[this.getMot().length()];
 
 	}
-	
-	
-	public void shuffle(String [] x)
-	{
-		
-		List <String> stringList = Arrays.asList(x);
+
+	public void shuffle(String[] x) {
+
+		List<String> stringList = Arrays.asList(x);
 		Collections.shuffle(stringList);
 		stringList.toArray(x);
-		
+
 	}
-	@SuppressWarnings("unused")
+
 	public void word() {
 		if (this.getMot().equalsIgnoreCase(this.getMot2())) {
 			for (int i = 0; i < this.getMot().length(); i++) {
 				this.setIndex(i, this.getMot().charAt(i));
 			}
 			this.setMess("reussi");
+
 			++Partie.success;
 			++Partie.total;
 			++Partie.wordIndex;
+			Partie.chance = 5;
+			
+			//Thread.sleep(3000);
 			this.setMot(this.dict[Partie.wordIndex]);
-			Partie.chance = 3;
 			Partie.index = new char[this.getMot().length()];
 			Partie.index2 = new char[this.getMot().length()];
 
@@ -195,6 +193,7 @@ public class Partie extends Observable {
 						this.setIndex(i, this.getMot2().charAt(i));
 						break innerloop;
 						// augmenter le character au tableau 1
+
 					} else if ((this.getMot().charAt(j) == this.getMot2().charAt(i)) && (i != j)) {
 
 						this.setIndex2(i, this.getMot2().charAt(i));
@@ -207,17 +206,16 @@ public class Partie extends Observable {
 						}
 					}
 				}
+
 			}
 
 		}
 		if (Partie.getChance() == 0) {
-
+			Gui.index = 0;
+			Gui.arr = new char[5][6];
+			Gui.arr2 = new char[5][6];
 			this.setMess("echouer");
-			Partie.chance = 3;
-			++Partie.total;
-			// this.setMot(this.dict[this.wordIndex]);
-			Partie.index = new char[this.getMot().length()];
-			Partie.index2 = new char[this.getMot().length()];
+			Partie.chance = 5;
 
 		}
 		if (Partie.total == Partie.end) {
@@ -226,11 +224,6 @@ public class Partie extends Observable {
 			this.setMess("termine");
 		}
 
-	}
-
-	@Override
-	public String toString() {
-		return "Partie [dict=" + Arrays.toString(dict) + "]";
 	}
 
 	private class Timer implements Runnable {
@@ -249,8 +242,6 @@ public class Partie extends Observable {
 					e.printStackTrace();
 				}
 
-				
-
 				if ((Partie.mess == "reussi") || (Partie.mess == "echouer")) {
 					try {
 						Thread.sleep(1000);
@@ -264,10 +255,9 @@ public class Partie extends Observable {
 					exit = true;
 					System.out.println("Thread stopped");
 
-
 				} else if (cpt2 == 50) {
-					mod.setTimerUp(true); 
-					
+					mod.setTimerUp(true);
+
 					cpt2 = 60;
 					try {
 						Thread.sleep(1000);
