@@ -157,15 +157,26 @@ public class Partie extends Observable {
 
 	}
 
-	public void shuffle(String[] x) {
-
-		List<String> stringList = Arrays.asList(x);
-		Collections.shuffle(stringList);
-		stringList.toArray(x);
-
-	}
-
 	public void word() {
+
+		this.setMess(" ");
+		for (int i = 0; i < this.getMot().length(); i++) {
+			if (this.getMot().charAt(i) == this.getMot2().charAt(i)) {
+				this.setIndex(i, this.getMot2().charAt(i));
+
+			} else {
+				innerloop: for (int j = 0; j < this.getMot().length(); j++) {
+					if (this.getMot().charAt(j) == this.getMot2().charAt(i)) {
+						this.setIndex2(i, this.getMot2().charAt(i));
+						System.out.println(this.getMot2().charAt(i));
+
+						break innerloop;
+
+					}
+				}
+			}
+		}
+
 		if (this.getMot().equalsIgnoreCase(this.getMot2())) {
 			for (int i = 0; i < this.getMot().length(); i++) {
 				this.setIndex(i, this.getMot().charAt(i));
@@ -176,40 +187,12 @@ public class Partie extends Observable {
 			++Partie.total;
 			++Partie.wordIndex;
 			Partie.chance = 5;
-			
-			//Thread.sleep(3000);
-			this.setMot(this.dict[Partie.wordIndex]);
 			Partie.index = new char[this.getMot().length()];
 			Partie.index2 = new char[this.getMot().length()];
-
-		} else {
-			this.setMess(" ");
-			outerloop: for (int i = 0; i < this.getMot().length(); i++) {
-				innerloop: for (int j = 0; j < this.getMot().length(); j++) {
-					if ((this.getMot().charAt(j) == this.getMot2().charAt(i)) && (i == j)) {
-						// si il existe des character coommun entre le mot a definer et le mot entre par
-						// l'utilisateur
-
-						this.setIndex(i, this.getMot2().charAt(i));
-						break innerloop;
-						// augmenter le character au tableau 1
-
-					} else if ((this.getMot().charAt(j) == this.getMot2().charAt(i)) && (i != j)) {
-
-						this.setIndex2(i, this.getMot2().charAt(i));
-						// break innerloop;
-						// add character to index 2;
-
-					} else {
-						if (i == this.getMot().length() - 1 && j == this.getMot().length() - 1) {
-							// Le joueur n'a trouver aucun character du mot;
-						}
-					}
-				}
-
-			}
+			this.setMot(this.dict[Partie.wordIndex]);
 
 		}
+
 		if (Partie.getChance() == 0) {
 			Gui.index = 0;
 			Gui.arr = new char[5][6];

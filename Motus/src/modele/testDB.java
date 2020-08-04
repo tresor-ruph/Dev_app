@@ -24,9 +24,6 @@ class testDB {
 		Assert.assertEquals(serv.signification, "Abri destiné à recevoir des véhicules");
 		Assert.assertEquals(serv.indice, "automobile");
 
-
-		
 	}
-
 
 }

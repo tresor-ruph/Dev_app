@@ -15,13 +15,16 @@ import controleurs.Controleur;
 public class Console extends Vue implements Observer {
 
 	protected Scanner sc;
+	Thread ri;
 
 	public Console(Partie model, Controleur control) {
 		super(model, control);
 		sc = new Scanner(System.in);
 		model.setWord();
-
 		this.afficher();
+		ReadInput readIn = new ReadInput();
+		ri = new Thread(readIn);
+		ri.start();
 	}
 
 	public void afficher() {
@@ -32,48 +35,59 @@ public class Console extends Vue implements Observer {
 		System.out.println("veuillez entrer le mot");
 		System.out.println();
 
-		while (model.getMess() != "termine") {
+		model.setIndex(0, model.getMot().charAt(0));
+		System.out.print("nombre de tentative restante =" + Partie.chance);
+		System.out.println("                                                " + Partie.total + "/" + Partie.end);
 
-			model.setIndex(0, model.getMot().charAt(0));
-			System.out.print("nombre de tentative restante =" + Partie.chance);
-			System.out.println("                                                " + Partie.total + "/" + Partie.end);
+		System.out.println();
+		System.out.print(Partie.index[0]);
+		for (int i = 1; i < model.getMot().length(); i++) {
 
-			System.out.println();
-			System.out.print(Partie.index[0]);
-			for (int i = 1; i < model.getMot().length(); i++) {
+			if ((Partie.index[i] >= 'a') || (Partie.index[i] >= 'A')) {
+				System.out.print(" " + Partie.index[i]);
+			} else {
 
-				if ((Partie.index[i] >= 'a') || (Partie.index[i] >= 'A')) {
-					System.out.print(" " + Partie.index[i]);
-				} else {
-
-					System.out.print(" _ ");
-				}
+				System.out.print(" _ ");
 			}
-			System.out.println();
-			// control.setChance();
+		}
+		System.out.println();
+
+	}
+
+	private class ReadInput implements Runnable {
+		public void run() {
+			try {
+				
 			String inputString = sc.nextLine();
+
 			if (inputString.length() > model.getMot().length()) {
-				System.out.println("le mot a entre contient plus de character que le mot a definer");
+				System.out.println("le mot  entre contient plus de character que le mot a definer");
 				System.out.println();
 
 			} else if (inputString.length() < model.getMot().length()) {
-				System.out.println("le mot a entre contient moin de character que le mot a definer");
+				System.out.println("le mot  entre contient moin de character que le mot a definer");
 				System.out.println();
 
 			} else {
 				control.setString(inputString);
 			}
+		}catch(Exception e) {
+			System.out.println();
 		}
-
 	}
-
+	}
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-
+		
+		System.out.println(ri.isAlive());
+		
+		this.afficher();
+		if(ri.isAlive() == false) {
+		new Thread(new ReadInput()).start();
+		}
 		if (model.getMess() == "reussi") {
 			System.out.println("reussi");
-
 		} else if (model.getMess() == "echouer") {
 
 			System.out.println("le mot a trouver etait " + model.getMot());

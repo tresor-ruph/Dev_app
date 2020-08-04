@@ -4,6 +4,7 @@
 package vues;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 
 /**
  * @author treso
@@ -29,29 +30,26 @@ public class Panneau extends JPanel {
 	/**
 	 * 
 	 */
-	// Partie mod = new Partie();
 	public static int chancecnt = 1;
-	private JTextField field1;
 	public String mot;
 
 	public String mot2;
 	public String mess;
 	public char[][] char1;
 	public char[][] char2;
+	public char[][] char3;
 
-	public Panneau(String x, String x2, String x3, char[][] y, char[][] z) {
+	public Panneau(String x, String x2, String x3, char[][] y, char[][] z,char[][] z2) {
 		this.mot = x2;
 		this.mot2 = x;
 		this.char1 = y;
 		this.char2 = z;
 		this.mess = x3;
+		this.char3 = z2;
 	}
 
 	public void paintComponent(Graphics g) {
 
-		// super.paintComponents(g);
-
-		// mod.setWord();
 
 		try {
 			Image img = ImageIO.read(new File("motus.jpg"));
@@ -70,20 +68,10 @@ public class Panneau extends JPanel {
 				g.fill3DRect((j + 1) * 50, (i + 1) * 50, 50, 50, true);
 			}
 		}
-		JLabel mot = new JLabel("Entrez Le Mot :");
-		mot.setBounds(50, 305, 100, 65);
-		this.add(mot);
- 
-		field1 = new JTextField();
-		field1.setBounds(143, 320, 150, 25);
-		this.add(field1);
-		field1.setColumns(10);
-
-		JLabel point = new JLabel(modele.Partie.total + " mot(s) trouvé sur " + modele.Partie.end);
-		point.setBounds(143, 350, 250, 65);
-		this.add(point);
+		
 
 		if (Partie.chance == 5) {
+			
 			JLabel char1 = new JLabel(this.mot.charAt(0) + " ");
 			char1.setForeground(Color.ORANGE);
 			char1.setFont(new Font("Verdana", Font.PLAIN, 30));
@@ -100,10 +88,9 @@ public class Panneau extends JPanel {
 
 			}
 		} else if (Partie.chance < 5) {
-			
-			
-			 for (int i = 0; i < 5; i++) {
-				 for (int j = 0; j < this.mot2.length(); j++) {
+
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < this.mot2.length(); j++) {
 					if (Gui.arr2[i][j] >= 'a' || Gui.arr2[i][j] >= 'A') {
 						JLabel char2 = new JLabel(Gui.arr2[i][j] + " ");
 						char2.setForeground(Color.ORANGE);
@@ -112,15 +99,22 @@ public class Panneau extends JPanel {
 						this.add(char2);
 
 						if (Gui.arr[i][j] >= 'a' || Gui.arr[i][j] >= 'A') {
+							if (Gui.arr[i][j] == Gui.arr2[i][j]) {
+								Color mycolor = new Color(0, 255, 0, 127);
+								g.setColor(mycolor);
+								g.fillRoundRect((j + 1) * 50, (i + 1) * 50, 50, 50, 50, 50);
+							}
+							
 
-							Color mycolor = new Color(0, 255, 0, 127);
-							g.setColor(mycolor);
-							g.fillRoundRect((j + 1) * 50, (i+1) * 50, 50, 50,50, 50);
 						}
-						
-					
-					} 
-					
+						if (Gui.arr3[i][j] >= 'a' || Gui.arr3[i][j] >= 'A') {
+							Color mycolor = new Color(208, 96, 57, 190);
+							g.setColor(mycolor);
+							g.fillRoundRect((j + 1) * 50, (i + 1) * 50, 50, 50, 50, 50);
+						}
+
+					}
+
 				}
 			}
 
