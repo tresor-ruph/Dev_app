@@ -39,7 +39,7 @@ public class Panneau extends JPanel {
 	public char[][] char2;
 	public char[][] char3;
 
-	public Panneau(String x, String x2, String x3, char[][] y, char[][] z,char[][] z2) {
+	public Panneau(String x, String x2, String x3, char[][] y, char[][] z, char[][] z2) {
 		this.mot = x2;
 		this.mot2 = x;
 		this.char1 = y;
@@ -49,7 +49,6 @@ public class Panneau extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-
 
 		try {
 			Image img = ImageIO.read(new File("motus.jpg"));
@@ -68,10 +67,9 @@ public class Panneau extends JPanel {
 				g.fill3DRect((j + 1) * 50, (i + 1) * 50, 50, 50, true);
 			}
 		}
-		
 
 		if (Partie.chance == 5) {
-			
+
 			JLabel char1 = new JLabel(this.mot.charAt(0) + " ");
 			char1.setForeground(Color.ORANGE);
 			char1.setFont(new Font("Verdana", Font.PLAIN, 30));
@@ -104,13 +102,14 @@ public class Panneau extends JPanel {
 								g.setColor(mycolor);
 								g.fillRoundRect((j + 1) * 50, (i + 1) * 50, 50, 50, 50, 50);
 							}
-							
 
 						}
 						if (Gui.arr3[i][j] >= 'a' || Gui.arr3[i][j] >= 'A') {
-							Color mycolor = new Color(208, 96, 57, 190);
-							g.setColor(mycolor);
-							g.fillRoundRect((j + 1) * 50, (i + 1) * 50, 50, 50, 50, 50);
+							if (Gui.arr2[i][j] == Gui.arr3[i][j]) {
+								Color mycolor = new Color(208, 96, 57, 190);
+								g.setColor(mycolor);
+								g.fillRoundRect((j + 1) * 50, (i + 1) * 50, 50, 50, 50, 50);
+							}
 						}
 
 					}

@@ -10,8 +10,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import controleurs.*;
 import modele.Partie;
@@ -47,11 +49,12 @@ public class Gui extends Vue implements Observer, ActionListener {
 		this.fenetre(model.getMot2(), model.getMot(), model.getMess(), Gui.arr, Gui.arr2, Gui.arr3);
 
 	}
-
 	public void fenetre(String mot, String mot2, String mess, char[][] char2, char[][] char3, char[][] char4) {
 		f.setTitle("MOTUS");
 		f.setSize(500, 550);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setLocationRelativeTo(null);
+
 		f.setResizable(false);
 		f.setContentPane(new Panneau(mot, mot2, mess, char2, char3, char4));
 		f.getContentPane().setLayout(null);
@@ -77,7 +80,7 @@ public class Gui extends Vue implements Observer, ActionListener {
 	}
 
 	public void setArr2() {
-		if (model.getMess() == "reussi") {
+		if ((model.getMess() == "reussi") || (model.getMess() == "echouer")) {
 			Gui.arr = new char[5][6];
 			Gui.arr2 = new char[5][6];
 			Gui.arr3 = new char[5][6];
@@ -100,7 +103,7 @@ public class Gui extends Vue implements Observer, ActionListener {
 	}
 
 	public void setArr3() {
-		if (model.getMess() == "reussi") {
+		if ((model.getMess() == "reussi") || (model.getMess() == "echouer")) {
 			Gui.arr = new char[5][6];
 			Gui.arr2 = new char[5][6];
 			Gui.arr3 = new char[5][6];
@@ -120,7 +123,7 @@ public class Gui extends Vue implements Observer, ActionListener {
 		this.setArr2();
 		this.setArr3();
 
-		if (model.getMess() == "reussi") {
+		if ((model.getMess() == "reussi") || (model.getMess() == "echouer")) {
 			if (model.getMess() == "reussi") {
 				Gui.index = 0;
 
@@ -134,6 +137,15 @@ public class Gui extends Vue implements Observer, ActionListener {
 
 				}
 			}
+
+		}
+
+		if (model.getMess() == "reussi") {
+			JOptionPane.showMessageDialog(f, "BINGO !!\n" + model.dict[Partie.wordIndex - 1].toUpperCase());
+		} else if (model.getMess() == "echouer") {
+			JOptionPane.showMessageDialog(f,
+					"Le mot a definer etait\n" + model.dict[Partie.wordIndex - 1].toUpperCase());
+		} else if(model.getMess() == "termine") {
 
 		}
 		this.fenetre(model.getMot2(), model.getMot(), model.getMess(), Gui.arr, Gui.arr2, Gui.arr3);

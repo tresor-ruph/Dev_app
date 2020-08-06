@@ -146,9 +146,6 @@ public class Partie extends Observable {
 
 	public void setWord() {
 
-		Timer decomptage = new Timer();
-		Thread t1 = new Thread(decomptage);
-		// t1.start();
 
 		this.setMot(this.dict[Partie.wordIndex]);
 
@@ -168,7 +165,6 @@ public class Partie extends Observable {
 				innerloop: for (int j = 0; j < this.getMot().length(); j++) {
 					if (this.getMot().charAt(j) == this.getMot2().charAt(i)) {
 						this.setIndex2(i, this.getMot2().charAt(i));
-						System.out.println(this.getMot2().charAt(i));
 
 						break innerloop;
 
@@ -209,52 +205,5 @@ public class Partie extends Observable {
 
 	}
 
-	private class Timer implements Runnable {
-
-		@Override
-		public void run() {
-			Partie mod = new Partie();
-			int cpt2 = 60;
-			boolean exit = false;
-			while (!exit) {
-				--cpt2;
-				System.out.println(cpt2);
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-				if ((Partie.mess == "reussi") || (Partie.mess == "echouer")) {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					cpt2 = 60;
-					Partie.mess = " ";
-				} else if (Partie.mess == "termine") {
-					exit = true;
-					System.out.println("Thread stopped");
-
-				} else if (cpt2 == 50) {
-					mod.setTimerUp(true);
-
-					cpt2 = 60;
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-
-					}
-
-				}
-
-			}
-
-		}
-
-	}
+	
 }
