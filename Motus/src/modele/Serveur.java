@@ -25,8 +25,11 @@ public class Serveur {
 	int id;
 	String mot;
 	String signification;
-	String indice;
+	String niveau;
 	public String[] dict;
+	public String[] dict2;
+	public String[] dict3;
+
 	public HashMap<String, String> getLib() {
 		return lib;
 	}
@@ -86,12 +89,10 @@ public class Serveur {
 			this.id = resultSet.getInt("id");
 			this.mot = resultSet.getString("mot");
 			this.signification = resultSet.getString("signification");
-			this.indice = resultSet.getString("indice");
+			this.niveau = resultSet.getString("niveau");
 
-			lib.put(this.mot, this.indice);
+			lib.put(this.mot, this.niveau);
 			lib2.put(this.mot, this.signification);
-			
-		
 
 		}
 	}
@@ -113,7 +114,7 @@ public class Serveur {
 
 		}
 	}
-	
+
 	public void shuffle(String[] x) {
 
 		List<String> stringList = Arrays.asList(x);
@@ -121,27 +122,52 @@ public class Serveur {
 		stringList.toArray(x);
 
 	}
+
+	/**
+	 * la taille de dict, dict2 et dict3 devra etre la taille de la bdd divise par 3
+	 */
 	public void initWord() {
 		int cnt = 0;
+		int cnt2 = 0;
+		int cnt3 = 0;
 		try {
 			this.readDataBase();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.dict = new String[this.getLib().size()];
+		
+		this.dict = new String[6];
+		this.dict2 = new String[6];
+		this.dict3 = new String[6];
 
 		for (String i : this.getLib().keySet()) {
-			this.dict[cnt] = i;
-			++cnt;
+
+			if (this.getLib().get(i).equalsIgnoreCase("facile")) {
+				this.dict[cnt] = i;
+				++cnt;
+			} else if (this.getLib().get(i).equalsIgnoreCase("meduim")) {
+
+				this.dict2[cnt2] = i;
+				++cnt2;
+			} else if (this.getLib().get(i).equals("dificile")) {
+
+				this.dict3[cnt3] = i;
+				++cnt3;
+			} else {
+				
+			}
 		}
 		this.shuffle(this.dict);
+		this.shuffle(this.dict2);
+		this.shuffle(this.dict3);
+		
 	}
-	
-	
 
 	public static void main(String[] args) throws Exception {
 		Serveur BDD = new Serveur();
-		BDD.readDataBase();
+		BDD.initWord();
+	
+
 	}
 }

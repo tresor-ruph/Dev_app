@@ -47,4 +47,7 @@ public class Controleur {
 		model.setMot(model.dict[Partie.wordIndex]);
 	}
 
+	public void setLevel(String s) {
+		model.setLvl(s);
+	}
 }

@@ -23,25 +23,20 @@ import java.util.List;
  */
 @SuppressWarnings("deprecation")
 public class Partie extends Observable {
+	
+	
 	public Partie() {
 		Serveur serv = new Serveur();
 		serv.initWord();
 		this.dict = serv.dict;
+		this.dict2 = serv.dict2;
+		this.dict3 = serv.dict3;
 	}
 
-	public boolean timerUp = false;
 
-	public boolean isTimerUp() {
-		return timerUp;
-	}
+	
 
-	public void setTimerUp(boolean timerUp) {
-		this.timerUp = timerUp;
-		// setChanged();
-		// notifyObservers();
-
-	}
-
+	public String lvl = " ";
 	public static int cpt = 60;
 	public static int chance = 5;
 	public static int success = 0;
@@ -50,6 +45,8 @@ public class Partie extends Observable {
 	public static int wordIndex = 0;
 	public String mot;
 	public String[] dict;
+	public String[] dict2;
+	public String[] dict3;
 	public String mot2;
 	public boolean verif = true;
 	public static String mess;
@@ -146,16 +143,36 @@ public class Partie extends Observable {
 
 	public void setWord() {
 
+		if (this.getLvl().equalsIgnoreCase("facile")) {
+			this.setMot(this.dict[Partie.wordIndex]);
+		} else if (this.getLvl().equalsIgnoreCase("meduim")) {
+			this.setMot(this.dict2[Partie.wordIndex]);
 
-		this.setMot(this.dict[Partie.wordIndex]);
+		} else if (this.getLvl().equalsIgnoreCase("dificile")) {
+			this.setMot(this.dict2[Partie.wordIndex]);
+
+		} else {
+			System.out.println("something went wrong");
+		}
 
 		Partie.index = new char[this.getMot().length()];
 		Partie.index2 = new char[this.getMot().length()];
 
 	}
 
-	public void word() {
+	public String getLvl() {
+		return lvl;
+	}
 
+	public void setLvl(String lvl) {
+		this.lvl = lvl;
+		this.setWord();
+
+		setChanged();
+		notifyObservers();
+	}
+
+	public void word() {
 		this.setMess(" ");
 		for (int i = 0; i < this.getMot().length(); i++) {
 			if (this.getMot().charAt(i) == this.getMot2().charAt(i)) {
@@ -195,15 +212,19 @@ public class Partie extends Observable {
 			Gui.arr2 = new char[5][6];
 			this.setMess("echouer");
 			Partie.chance = 5;
+			++Partie.total;
 
 		}
 		if (Partie.total == Partie.end) {
-			++Partie.total;
 
 			this.setMess("termine");
+
+			Partie.index = new char[this.getMot().length()];
+			Partie.index2 = new char[this.getMot().length()];
+			
+			
 		}
 
 	}
 
-	
 }

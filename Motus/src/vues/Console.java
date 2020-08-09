@@ -15,7 +15,11 @@ import controleurs.Controleur;
 public class Console extends Vue implements Observer {
 
 	protected Scanner sc;
+
+	protected Scanner sc2;
+
 	Thread ri;
+	Thread niv;
 
 	public Console(Partie model, Controleur control) {
 		super(model, control);
@@ -24,11 +28,16 @@ public class Console extends Vue implements Observer {
 		System.out.println();
 		System.out.println();
 
-		model.setWord();
-		this.afficher();
-		ReadInput readIn = new ReadInput();
-		ri = new Thread(readIn);
-		ri.start();
+		System.out.println("veuillez choisir la dificulte");
+		System.out.println();
+		System.out.println("1 - facile");
+		System.out.println("2 - meduim");
+		System.out.println("3 - dificile");
+
+		Level l = new Level();
+		niv = new Thread(l);
+		niv.start();
+
 	}
 
 	public void afficher() {
@@ -42,7 +51,6 @@ public class Console extends Vue implements Observer {
 		System.out.println();
 		System.out.print(Partie.index[0]);
 		for (int i = 1; i < model.getMot().length(); i++) {
-
 			if ((Partie.index[i] >= 'a') || (Partie.index[i] >= 'A')) {
 				System.out.print(" " + Partie.index[i]);
 			} else {
@@ -57,32 +65,65 @@ public class Console extends Vue implements Observer {
 
 	private class ReadInput implements Runnable {
 		public void run() {
-			try {
 
-				String inputString = sc.nextLine();
+			sc2 = new Scanner(System.in);
 
-				if (inputString.length() > model.getMot().length()) {
-					System.out.println("le mot  entre contient plus de character que le mot a definer");
-					System.out.println();
+			String inputString = sc2.nextLine();
 
-				} else if (inputString.length() < model.getMot().length()) {
-					System.out.println("le mot  entre contient moin de character que le mot a definer");
-					System.out.println();
-
-				} else {
-					control.setString(inputString);
-				}
-			} catch (Exception e) {
+			if (inputString.length() > model.getMot().length()) {
+				System.out.println("le mot  entre contient plus de character que le mot a definer");
 				System.out.println();
+				inputString = sc2.nextLine();
+
+			} else if (inputString.length() < model.getMot().length()) {
+
+				System.out.println("le mot  entre contient moin de character que le mot a definer");
+				System.out.println();
+				inputString = sc2.nextLine();
+
+			} else {
+				control.setString(inputString);
+				System.out.println("value set");
 			}
-			System.out.println("stop");
+
+		}
+	}
+
+	public class Level implements Runnable {
+		public void run() {
+			int ctrl = 0;
+			while (ctrl == 0) {
+				int lvl = sc.nextInt();
+				if ((lvl >= 0) || (lvl <= 2)) {
+					ctrl = 1;
+					if (lvl == 0) {
+						System.out.println("true");
+						control.setLevel("facile");
+						System.out.println("set facile from console");
+					} else if (lvl == 1) {
+						control.setLevel("meduim");
+					} else if (lvl == 2) {
+						control.setLevel("dificile");
+					} else {
+						System.out.println("something went wrong while choosing the level");
+					}
+				} else {
+					System.out.println("veuillez entrer un niveau valide");
+
+				}
+			}
+
 		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-
+		if(model.getMess() == "termine") {
+		
+		}else {
+		new Thread(new ReadInput()).start();
+		}
 		if (model.getMess() == "reussi") {
 
 			try {
@@ -94,7 +135,7 @@ public class Console extends Vue implements Observer {
 			System.out.println("Mot suivant");
 			System.out.println();
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -110,23 +151,13 @@ public class Console extends Vue implements Observer {
 			System.out.println("BRAVO VOUS AVEZ TROUVE TOUT LES MOTS");
 		} else if ((model.getMess() == "termine") && (Partie.success != Partie.end)) {
 			System.out.println("VOUS AVEZ TROUVE " + Partie.success + " mot(s) sur " + Partie.end);
-		} else if (model.isTimerUp()) {
-			System.out.println("Time UP");
-			System.out.println("le mot a trouver etait " + model.getMot());
-			control.setWordcnt();
-			System.out.println("mot suivant");
-			System.out.println();
 		}
-		this.afficher();
+		
+		if(model.getMess() != "termine") {
+			this.afficher();
 
-		if (ri.isAlive() == false) {
-			if (model.getMess() == "termine") {
-
-			} else {
-				new Thread(new ReadInput()).start();
-			}
 		}
-
+		
 	}
 
 }
