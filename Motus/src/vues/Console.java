@@ -20,6 +20,12 @@ public class Console extends Vue implements Observer {
 
 	Thread ri;
 	Thread niv;
+	
+	/**
+	 * 
+	 * @param model : Partie : instance de la classe Partie
+	 * @param control : Controleur : instance de la classe Controleur
+	 */
 
 	public Console(Partie model, Controleur control) {
 		super(model, control);
@@ -63,6 +69,9 @@ public class Console extends Vue implements Observer {
 
 	}
 
+	
+	
+
 	private class ReadInput implements Runnable {
 		public void run() {
 
@@ -83,7 +92,6 @@ public class Console extends Vue implements Observer {
 
 			} else {
 				control.setString(inputString);
-				System.out.println("value set");
 			}
 
 		}
@@ -97,9 +105,7 @@ public class Console extends Vue implements Observer {
 				if ((lvl >= 0) || (lvl <= 2)) {
 					ctrl = 1;
 					if (lvl == 0) {
-						System.out.println("true");
 						control.setLevel("facile");
-						System.out.println("set facile from console");
 					} else if (lvl == 1) {
 						control.setLevel("meduim");
 					} else if (lvl == 2) {
@@ -132,6 +138,9 @@ public class Console extends Vue implements Observer {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			for(int i =0; i < model.getMot().length();i++) {
+			System.out.print(model.dict[Partie.wordIndex -1].charAt(i) + " ") ;}
+			System.out.println();
 			System.out.println("Mot suivant");
 			System.out.println();
 			try {

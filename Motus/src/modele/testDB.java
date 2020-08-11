@@ -19,10 +19,11 @@ class testDB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Assert.assertEquals(serv.id, 1);
-		Assert.assertEquals(serv.mot, "garage");
-		Assert.assertEquals(serv.signification, "Abri destiné à recevoir des véhicules");
-		Assert.assertEquals(serv.niveau, "automobile");
+		
+		Assert.assertEquals(serv.id, 11);
+		Assert.assertEquals(serv.mot, "button");
+		Assert.assertEquals(serv.signification, "lol");
+		Assert.assertEquals(serv.niveau, "facile");
 
 	}
 

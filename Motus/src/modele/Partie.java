@@ -11,33 +11,12 @@ import java.util.Collections;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author tresor
- * 
- * @param mot   : String : represente le mot a definer
- * @param mot2  : String : contient le mot entrer par l'utilisateur
- * @param verif : boolean : boolean permettant de verifier la longeur du mot
- *              entrer par l'utilisateur class Partie servira de la classe
- *              principal du package modele et sera donc la class a observer
- *
- */
+
 @SuppressWarnings("deprecation")
 public class Partie extends Observable {
-	
-	
-	public Partie() {
-		Serveur serv = new Serveur();
-		serv.initWord();
-		this.dict = serv.dict;
-		this.dict2 = serv.dict2;
-		this.dict3 = serv.dict3;
-	}
-
-
-	
 
 	public String lvl = " ";
-	public static int cpt = 60;
+	//public static int cpt = 60;
 	public static int chance = 5;
 	public static int success = 0;
 	public static int total = 0;
@@ -48,10 +27,18 @@ public class Partie extends Observable {
 	public String[] dict2;
 	public String[] dict3;
 	public String mot2;
-	public boolean verif = true;
+	//public boolean verif = true;
 	public static String mess;
 	public static char[] index;
 	public static char[] index2;
+
+	public Partie() {
+		Serveur serv = new Serveur();
+		serv.initWord();
+		this.dict = serv.dict;
+		this.dict2 = serv.dict2;
+		this.dict3 = serv.dict3;
+	}
 
 	public static int getChance() {
 		return chance;
@@ -65,6 +52,11 @@ public class Partie extends Observable {
 		return index;
 	}
 
+	/**
+	 * 
+	 * @param i : int 
+	 * @param j : int 
+	 */
 	public void setIndex(int i, char j) {
 		Partie.index[i] = j;
 	}
@@ -80,6 +72,11 @@ public class Partie extends Observable {
 	public String getMess() {
 		return mess;
 	}
+	
+	/**
+	 * 
+	 * @param mess : String : message a afficher a l'utilisateur
+	 */
 
 	public void setMess(String mess) {
 		Partie.mess = mess;
@@ -94,34 +91,26 @@ public class Partie extends Observable {
 		++Partie.wordIndex;
 	}
 
-	/**
-	 * permet de recuperer la valeur de verif
-	 */
-	public boolean isVerif() {
-		return verif;
-	}
 
-	/**
-	 * @param veriif : boolean
-	 * 
-	 */
-	public void setVerif(boolean verif) {
-		this.verif = verif;
-	}
+
+	
 
 	public String getMot2() {
 		return mot2;
 	}
 
 	/**
-	 * @param mot2 : String
+	 * @param mot2 : String : mot a definer
 	 */
 
 	public void setMot(String mot) {
 		this.mot = mot;
 
 	}
-
+/**
+ * 
+ * @param mot2 : String : mot entre par l'utilisateur
+ */
 	public void setMot2(String mot2) {
 		this.mot2 = mot2;
 		this.word();
@@ -135,11 +124,28 @@ public class Partie extends Observable {
 		return mot;
 	}
 
+	public String getLvl() {
+		return lvl;
+	}
+
 	/**
-	 * Cette methode permet va comparer le mot a definer a celui entre par
-	 * l'utilisateur
 	 * 
+	 * @param lvl : niveau de dificulte du jeu.
+	 * peut prendre 3 valeur facile, meduim et dificile.
 	 */
+	
+	public void setLvl(String lvl) {
+		this.lvl = lvl;
+		this.setWord();
+
+		setChanged();
+		notifyObservers();
+	}
+
+/**
+ * La method setWord va comparer choisir un mot a definer en fonction du niveau
+ * de dificulte entre par l'utilisateur
+ */
 
 	public void setWord() {
 
@@ -159,19 +165,11 @@ public class Partie extends Observable {
 		Partie.index2 = new char[this.getMot().length()];
 
 	}
-
-	public String getLvl() {
-		return lvl;
-	}
-
-	public void setLvl(String lvl) {
-		this.lvl = lvl;
-		this.setWord();
-
-		setChanged();
-		notifyObservers();
-	}
-
+	/**
+	 * La methode word permet va comparer le mot a definer a celui entre par
+	 * l'utilisateur
+	 * 
+	 */
 	public void word() {
 		this.setMess(" ");
 		for (int i = 0; i < this.getMot().length(); i++) {
@@ -221,8 +219,7 @@ public class Partie extends Observable {
 
 			Partie.index = new char[this.getMot().length()];
 			Partie.index2 = new char[this.getMot().length()];
-			
-			
+
 		}
 
 	}
