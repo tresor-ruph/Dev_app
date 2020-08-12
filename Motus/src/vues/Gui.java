@@ -60,7 +60,6 @@ public class Gui extends Vue implements Observer, ActionListener {
 		JLabel char1 = new JLabel("M O T U S");
 		char1.setForeground(Color.BLUE);
 		char1.setFont(new Font("Verdana", Font.PLAIN, 45));
-		//f1.getContentPane().setBackground( Color.DARK_GRAY );
 		
 		jRadioButton1 = new JRadioButton();
 
@@ -76,14 +75,14 @@ public class Gui extends Vue implements Observer, ActionListener {
 
 		jRadioButton1.setText("Facile");
 
-		jRadioButton2.setText("Meduim");
+		jRadioButton2.setText("Normal");
 		jRadioButton3.setText("dificile");
 		char1.setBounds(100, 50, 250, 48);
 		f1.add(char1);
 
 		jRadioButton1.setBounds(120, 190, 120, 50);
 
-		jRadioButton2.setBounds(120, 250, 80, 50);
+		jRadioButton2.setBounds(120, 250, 120, 50);
 		jRadioButton3.setBounds(120, 310, 80, 50);
 
 		jButton.setBounds(125, 370, 120, 30);
@@ -128,6 +127,15 @@ public class Gui extends Vue implements Observer, ActionListener {
 			}
 		});
 	}
+	/**
+	 * 
+	 * @param mot : String : mot a deviner
+	 * @param mot2 : String : mot entre par l'utilisateur
+	 * @param mess : String : message a afficher a l'utilisateur
+	 * @param char2
+	 * @param char3
+	 * @param char4
+	 */
 
 	public void fenetre(String mot, String mot2, String mess, char[][] char2, char[][] char3, char[][] char4) {
 		f.setTitle("MOTUS");
@@ -227,7 +235,7 @@ public class Gui extends Vue implements Observer, ActionListener {
 			JOptionPane.showMessageDialog(f, "BINGO !!\n" + model.dict[Partie.wordIndex - 1].toUpperCase());
 		} else if (model.getMess() == "echouer") {
 			JOptionPane.showMessageDialog(f,
-					"Le mot a definer etait\n" + model.dict[Partie.wordIndex - 1].toUpperCase());
+					"LE MOT A DEVINER ETAIT \n" + model.dict[Partie.wordIndex - 1].toUpperCase());
 		} else if (model.getMess() == "termine") {
 			if (Partie.success == Partie.end) {
 				JOptionPane.showMessageDialog(f, "FELICITATION !!!\n VOUS AVEZ TROUVER TOUT LES MOTS");
@@ -255,7 +263,8 @@ public class Gui extends Vue implements Observer, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String x = field1.getText();
-		if (x.length() < model.getMot().length()) {
+		if ((x.length() < model.getMot().length())||(x.length() > model.getMot().length())) {
+			JOptionPane.showMessageDialog(f, "LA LONGEUR DU MOT A DEVINER EST DE "+model.getMot().length());
 
 		} else {
 			control.setString(x);

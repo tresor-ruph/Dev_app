@@ -173,12 +173,12 @@ public class Partie extends Observable {
 	public void word() {
 		this.setMess(" ");
 		for (int i = 0; i < this.getMot().length(); i++) {
-			if (this.getMot().charAt(i) == this.getMot2().charAt(i)) {
+			if (this.getMot().toUpperCase().charAt(i) == this.getMot2().toUpperCase().charAt(i)) {
 				this.setIndex(i, this.getMot2().charAt(i));
 
 			} else {
 				innerloop: for (int j = 0; j < this.getMot().length(); j++) {
-					if (this.getMot().charAt(j) == this.getMot2().charAt(i)) {
+					if (this.getMot().toUpperCase().charAt(j) == this.getMot2().toUpperCase().charAt(i)) {
 						this.setIndex2(i, this.getMot2().charAt(i));
 
 						break innerloop;

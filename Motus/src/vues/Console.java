@@ -34,11 +34,11 @@ public class Console extends Vue implements Observer {
 		System.out.println();
 		System.out.println();
 
-		System.out.println("veuillez choisir la dificulte");
+		System.out.println("veuillez choisir votre niveau de dificulte");
 		System.out.println();
-		System.out.println("1 - facile");
-		System.out.println("2 - meduim");
-		System.out.println("3 - dificile");
+		System.out.println("0 - facile");
+		System.out.println("1 - Normale");
+		System.out.println("2 - dificile");
 
 		Level l = new Level();
 		niv = new Thread(l);
@@ -52,7 +52,7 @@ public class Console extends Vue implements Observer {
 
 		model.setIndex(0, model.getMot().charAt(0));
 		System.out.print("nombre de tentative restante =" + Partie.chance);
-		System.out.println("                                                " + Partie.total + "/" + Partie.end);
+		System.out.println("                                                " + Partie.total + " trouve sur" + Partie.end);
 
 		System.out.println();
 		System.out.print(Partie.index[0]);
@@ -80,13 +80,13 @@ public class Console extends Vue implements Observer {
 			String inputString = sc2.nextLine();
 
 			if (inputString.length() > model.getMot().length()) {
-				System.out.println("le mot  entre contient plus de character que le mot a definer");
+				System.out.println("le mot  entre contient plus de character que le mot a deviner");
 				System.out.println();
 				inputString = sc2.nextLine();
 
 			} else if (inputString.length() < model.getMot().length()) {
 
-				System.out.println("le mot  entre contient moin de character que le mot a definer");
+				System.out.println("le mot  entre contient moin de character que le mot a deviner");
 				System.out.println();
 				inputString = sc2.nextLine();
 
@@ -152,7 +152,7 @@ public class Console extends Vue implements Observer {
 
 		} else if (model.getMess() == "echouer") {
 
-			System.out.println("le mot a trouver etait " + model.getMot());
+			System.out.println("LE MOT A TROUVER ETAIT " + model.getMot());
 			control.setWordcnt();
 			System.out.println("mot suivant");
 			System.out.println();
