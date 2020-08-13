@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import modele.*;
 import java.awt.*;
-import java.io.File;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 @SuppressWarnings("serial")
@@ -54,7 +54,7 @@ public class Panneau extends JPanel {
 	public void paintComponent(Graphics g) {
 
 		try {
-			Image img = ImageIO.read(new File("resources/motus.jpg"));
+			BufferedImage img = ImageIO.read(Panneau.class.getResource("/image/motus.jpg"));
 			g.drawImage(img, 0, 0, 750, 550, this);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

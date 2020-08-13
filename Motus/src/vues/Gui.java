@@ -1,4 +1,4 @@
-		package vues;
+package vues;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -60,7 +60,7 @@ public class Gui extends Vue implements Observer, ActionListener {
 		JLabel char1 = new JLabel("M O T U S");
 		char1.setForeground(Color.BLUE);
 		char1.setFont(new Font("Verdana", Font.PLAIN, 45));
-		
+
 		jRadioButton1 = new JRadioButton();
 
 		jRadioButton2 = new JRadioButton();
@@ -101,7 +101,6 @@ public class Gui extends Vue implements Observer, ActionListener {
 		G1.add(jRadioButton1);
 		G1.add(jRadioButton2);
 		G1.add(jRadioButton3);
-		
 
 		f1.setVisible(true);
 
@@ -115,7 +114,7 @@ public class Gui extends Vue implements Observer, ActionListener {
 				}
 
 				else if (jRadioButton2.isSelected()) {
-					control.setLevel("medium");
+					control.setLevel("meduim");
 				} else {
 
 					control.setLevel("dificile");
@@ -127,11 +126,12 @@ public class Gui extends Vue implements Observer, ActionListener {
 			}
 		});
 	}
+
 	/**
 	 * 
-	 * @param mot : String : mot a deviner
-	 * @param mot2 : String : mot entre par l'utilisateur
-	 * @param mess : String : message a afficher a l'utilisateur
+	 * @param mot   : String : mot a deviner
+	 * @param mot2  : String : mot entre par l'utilisateur
+	 * @param mess  : String : message a afficher a l'utilisateur
 	 * @param char2
 	 * @param char3
 	 * @param char4
@@ -139,7 +139,7 @@ public class Gui extends Vue implements Observer, ActionListener {
 
 	public void fenetre(String mot, String mot2, String mess, char[][] char2, char[][] char3, char[][] char4) {
 		f.setTitle("MOTUS");
-		f.setSize(500, 550);
+		f.setSize(650, 550);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		f.setResizable(false);
@@ -168,9 +168,9 @@ public class Gui extends Vue implements Observer, ActionListener {
 
 	public void setArr2() {
 		if ((model.getMess() == "reussi") || (model.getMess() == "echouer")) {
-			Gui.arr = new char[5][6];
-			Gui.arr2 = new char[5][6];
-			Gui.arr3 = new char[5][6];
+			Gui.arr = new char[5][model.getMot().length()];
+			Gui.arr2 = new char[5][model.getMot().length()];
+			Gui.arr3 = new char[5][model.getMot().length()];
 
 			Gui.index = 0;
 		}
@@ -196,9 +196,9 @@ public class Gui extends Vue implements Observer, ActionListener {
 
 	public void setArr3() {
 		if ((model.getMess() == "reussi") || (model.getMess() == "echouer")) {
-			Gui.arr = new char[5][6];
-			Gui.arr2 = new char[5][6];
-			Gui.arr3 = new char[5][6];
+			Gui.arr = new char[5][model.getMot().length()];
+			Gui.arr2 = new char[5][model.getMot().length()];
+			Gui.arr3 = new char[5][model.getMot().length()];
 
 			Gui.index = 0;
 		}
@@ -221,9 +221,9 @@ public class Gui extends Vue implements Observer, ActionListener {
 			if (model.getMess() == "reussi") {
 				Gui.index = 0;
 
-				Gui.arr = new char[5][6];
-				Gui.arr2 = new char[5][6];
-				Gui.arr3 = new char[5][6];
+				Gui.arr = new char[5][model.getMot().length()];
+				Gui.arr2 = new char[5][model.getMot().length()];
+				Gui.arr3 = new char[5][model.getMot().length()];
 
 				--Gui.index;
 
@@ -232,10 +232,27 @@ public class Gui extends Vue implements Observer, ActionListener {
 		}
 
 		if (model.getMess() == "reussi") {
-			JOptionPane.showMessageDialog(f, "BINGO !!\n" + model.dict[Partie.wordIndex - 1].toUpperCase());
+			if (model.getLvl().equals("facile")) {
+				JOptionPane.showMessageDialog(f,
+						"BINGO \n" + model.dict[Partie.wordIndex - 1].toUpperCase());
+			} else if (model.getLvl().equals("meduim")) {
+				JOptionPane.showMessageDialog(f,
+						"BINGO \n" + model.dict2[Partie.wordIndex - 1].toUpperCase());
+			} else if (model.getLvl().equals("dificile")) {
+				JOptionPane.showMessageDialog(f,
+						"BINGO \n" + model.dict3[Partie.wordIndex - 1].toUpperCase());
+			}
 		} else if (model.getMess() == "echouer") {
-			JOptionPane.showMessageDialog(f,
-					"LE MOT A DEVINER ETAIT \n" + model.dict[Partie.wordIndex - 1].toUpperCase());
+			if (model.getLvl().equals("facile")) {
+				JOptionPane.showMessageDialog(f,
+						"LE MOT A DEVINER ETAIT \n" + model.dict[Partie.wordIndex - 1].toUpperCase());
+			} else if (model.getLvl().equals("meduim")) {
+				JOptionPane.showMessageDialog(f,
+						"LE MOT A DEVINER ETAIT \n" + model.dict2[Partie.wordIndex - 1].toUpperCase());
+			} else if (model.getLvl().equals("dificile")) {
+				JOptionPane.showMessageDialog(f,
+						"LE MOT A DEVINER ETAIT \n" + model.dict3[Partie.wordIndex - 1].toUpperCase());
+			}
 		} else if (model.getMess() == "termine") {
 			if (Partie.success == Partie.end) {
 				JOptionPane.showMessageDialog(f, "FELICITATION !!!\n VOUS AVEZ TROUVER TOUT LES MOTS");
@@ -263,8 +280,8 @@ public class Gui extends Vue implements Observer, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String x = field1.getText();
-		if ((x.length() < model.getMot().length())||(x.length() > model.getMot().length())) {
-			JOptionPane.showMessageDialog(f, "LA LONGEUR DU MOT A DEVINER EST DE "+model.getMot().length());
+		if ((x.length() < model.getMot().length()) || (x.length() > model.getMot().length())) {
+			JOptionPane.showMessageDialog(f, "LA LONGEUR DU MOT A DEVINER EST DE " + model.getMot().length());
 
 		} else {
 			control.setString(x);

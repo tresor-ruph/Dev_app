@@ -39,6 +39,8 @@ public class Console extends Vue implements Observer {
 		System.out.println("0 - facile");
 		System.out.println("1 - Normale");
 		System.out.println("2 - dificile");
+		System.out.println();
+		System.out.println();
 
 		Level l = new Level();
 		niv = new Thread(l);
@@ -139,7 +141,15 @@ public class Console extends Vue implements Observer {
 				e.printStackTrace();
 			}
 			for(int i =0; i < model.getMot().length();i++) {
-			System.out.print(model.dict[Partie.wordIndex -1].charAt(i) + " ") ;}
+				if(model.lvl.equals("facile")) {
+			System.out.print(model.dict[Partie.wordIndex -1].charAt(i) + " ") ;
+			}else if(model.lvl.equals("meduim")) {
+				System.out.print(model.dict2[Partie.wordIndex -1].charAt(i) + " ") ;
+
+			}else if(model.lvl.equals("dificile")) {
+				System.out.print(model.dict3[Partie.wordIndex -1].charAt(i) + " ") ;
+			}
+			}
 			System.out.println();
 			System.out.println("Mot suivant");
 			System.out.println();

@@ -53,9 +53,9 @@ public class Serveur {
 	private Statement statement = null;
 	private ResultSet resultSet = null;
 
-	final private String host = "jdbc:mysql://localhost";
-	final private String user = "root";
-	final private String passwd = "85550";
+	final private String host = "jdbc:mysql://sql7.freemysqlhosting.net";
+	final private String user = "sql7343279";
+	final private String passwd = "lm5ksRt97g";
 
 	public void readDataBase() throws Exception {
 		try {
@@ -64,7 +64,7 @@ public class Serveur {
 
 			// Permet d'effectuer des requettes sur la BDD
 			statement = connect.createStatement();
-			statement.executeQuery("use motus");
+			statement.executeQuery("use sql7343279");
 			// ResultSet recupère les resultats de la requette
 			resultSet = statement.executeQuery("select * from dictionary");
 			writeResultSet(resultSet);
@@ -136,10 +136,9 @@ public class Serveur {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		this.dict = new String[6];
-		this.dict2 = new String[6];
-		this.dict3 = new String[6];
+		this.dict = new String[this.getLib().size()/3];
+		this.dict2 = new String[this.getLib().size()/3];
+		this.dict3 = new String[this.getLib().size()/3];
 
 		for (String i : this.getLib().keySet()) {
 

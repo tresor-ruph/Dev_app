@@ -7,16 +7,11 @@ import java.util.Observable;
 
 import vues.Gui;
 
-import java.util.Collections;
-import java.util.Arrays;
-import java.util.List;
-
-
 @SuppressWarnings("deprecation")
 public class Partie extends Observable {
 
 	public String lvl = " ";
-	//public static int cpt = 60;
+	// public static int cpt = 60;
 	public static int chance = 5;
 	public static int success = 0;
 	public static int total = 0;
@@ -27,7 +22,7 @@ public class Partie extends Observable {
 	public String[] dict2;
 	public String[] dict3;
 	public String mot2;
-	//public boolean verif = true;
+	// public boolean verif = true;
 	public static String mess;
 	public static char[] index;
 	public static char[] index2;
@@ -54,8 +49,8 @@ public class Partie extends Observable {
 
 	/**
 	 * 
-	 * @param i : int 
-	 * @param j : int 
+	 * @param i : int
+	 * @param j : int
 	 */
 	public void setIndex(int i, char j) {
 		Partie.index[i] = j;
@@ -72,7 +67,7 @@ public class Partie extends Observable {
 	public String getMess() {
 		return mess;
 	}
-	
+
 	/**
 	 * 
 	 * @param mess : String : message a afficher a l'utilisateur
@@ -91,10 +86,6 @@ public class Partie extends Observable {
 		++Partie.wordIndex;
 	}
 
-
-
-	
-
 	public String getMot2() {
 		return mot2;
 	}
@@ -107,10 +98,11 @@ public class Partie extends Observable {
 		this.mot = mot;
 
 	}
-/**
- * 
- * @param mot2 : String : mot entre par l'utilisateur
- */
+
+	/**
+	 * 
+	 * @param mot2 : String : mot entre par l'utilisateur
+	 */
 	public void setMot2(String mot2) {
 		this.mot2 = mot2;
 		this.word();
@@ -130,22 +122,26 @@ public class Partie extends Observable {
 
 	/**
 	 * 
-	 * @param lvl : niveau de dificulte du jeu.
-	 * peut prendre 3 valeur facile, meduim et dificile.
+	 * @param lvl : niveau de dificulte du jeu. peut prendre 3 valeur facile, meduim
+	 *            et dificile.
 	 */
-	
+
 	public void setLvl(String lvl) {
 		this.lvl = lvl;
+
 		this.setWord();
+		Gui.arr = new char[5][this.getMot().length()];
+		Gui.arr2 = new char[5][this.getMot().length()];
+		Gui.arr3 = new char[5][this.getMot().length()];
 
 		setChanged();
 		notifyObservers();
 	}
 
-/**
- * La method setWord va comparer choisir un mot a definer en fonction du niveau
- * de dificulte entre par l'utilisateur
- */
+	/**
+	 * La method setWord va comparer choisir un mot a definer en fonction du niveau
+	 * de dificulte entre par l'utilisateur
+	 */
 
 	public void setWord() {
 
@@ -155,22 +151,24 @@ public class Partie extends Observable {
 			this.setMot(this.dict2[Partie.wordIndex]);
 
 		} else if (this.getLvl().equalsIgnoreCase("dificile")) {
-			this.setMot(this.dict2[Partie.wordIndex]);
+			this.setMot(this.dict3[Partie.wordIndex]);
 
 		} else {
 			System.out.println("something went wrong");
 		}
-
+		System.out.println(this.lvl);
 		Partie.index = new char[this.getMot().length()];
 		Partie.index2 = new char[this.getMot().length()];
 
 	}
+
 	/**
 	 * La methode word permet va comparer le mot a definer a celui entre par
 	 * l'utilisateur
 	 * 
 	 */
 	public void word() {
+		int ctrl = 0;
 		this.setMess(" ");
 		for (int i = 0; i < this.getMot().length(); i++) {
 			if (this.getMot().toUpperCase().charAt(i) == this.getMot2().toUpperCase().charAt(i)) {
@@ -178,10 +176,12 @@ public class Partie extends Observable {
 
 			} else {
 				innerloop: for (int j = 0; j < this.getMot().length(); j++) {
-					if (this.getMot().toUpperCase().charAt(j) == this.getMot2().toUpperCase().charAt(i)) {
+					if (this.getMot().toUpperCase().charAt(i) == this.getMot2().toUpperCase().charAt(j)) {
+
 						this.setIndex2(i, this.getMot2().charAt(i));
 
 						break innerloop;
+						
 
 					}
 				}
@@ -200,7 +200,15 @@ public class Partie extends Observable {
 			Partie.chance = 5;
 			Partie.index = new char[this.getMot().length()];
 			Partie.index2 = new char[this.getMot().length()];
-			this.setMot(this.dict[Partie.wordIndex]);
+			if (this.getLvl().equals("facile")) {
+				this.setMot(this.dict[Partie.wordIndex]);
+			} else if (this.getLvl().equals("meduim")) {
+				this.setMot(this.dict2[Partie.wordIndex]);
+
+			} else if (this.getLvl().equals("dificile")) {
+				this.setMot(this.dict3[Partie.wordIndex]);
+
+			}
 
 		}
 
@@ -222,6 +230,7 @@ public class Partie extends Observable {
 
 		}
 
+		
 	}
 
 }
