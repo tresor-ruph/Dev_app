@@ -7,23 +7,21 @@ import modele.Partie;
 import controleurs.Controleur;
 
 /**
- * @author treso
- * @param sc : Scanner : Objet permettant d'entrer des données
+ * @author tresor sc : Scanner : Objet permettant d'entrer des données
  *
  */
 @SuppressWarnings("deprecation")
 public class Console extends Vue implements Observer {
 
 	protected Scanner sc;
-
 	protected Scanner sc2;
 
 	Thread ri;
 	Thread niv;
-	
+
 	/**
 	 * 
-	 * @param model : Partie : instance de la classe Partie
+	 * @param model   : Partie : instance de la classe Partie
 	 * @param control : Controleur : instance de la classe Controleur
 	 */
 
@@ -54,7 +52,8 @@ public class Console extends Vue implements Observer {
 
 		model.setIndex(0, model.getMot().charAt(0));
 		System.out.print("nombre de tentative restante =" + Partie.chance);
-		System.out.println("                                                " + Partie.total + " trouve sur" + Partie.end);
+		System.out.println(
+				"                                                " + Partie.total + " trouve sur" + Partie.end);
 
 		System.out.println();
 		System.out.print(Partie.index[0]);
@@ -71,9 +70,9 @@ public class Console extends Vue implements Observer {
 
 	}
 
-	
-	
-
+	/**
+	 * Permer a l'utilisateur d'entrer des données dans un autre thread
+	 */
 	private class ReadInput implements Runnable {
 		public void run() {
 
@@ -99,6 +98,11 @@ public class Console extends Vue implements Observer {
 		}
 	}
 
+	/**
+	 * 
+	 * permet a l'utilisateur de choisir son niveau de dificulte
+	 *
+	 */
 	public class Level implements Runnable {
 		public void run() {
 			int ctrl = 0;
@@ -127,10 +131,10 @@ public class Console extends Vue implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		if(model.getMess() == "termine") {
-		
-		}else {
-		new Thread(new ReadInput()).start();
+		if (model.getMess() == "termine") {
+
+		} else {
+			new Thread(new ReadInput()).start();
 		}
 		if (model.getMess() == "reussi") {
 
@@ -140,15 +144,15 @@ public class Console extends Vue implements Observer {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			for(int i =0; i < model.getMot().length();i++) {
-				if(model.lvl.equals("facile")) {
-			System.out.print(model.dict[Partie.wordIndex -1].charAt(i) + " ") ;
-			}else if(model.lvl.equals("meduim")) {
-				System.out.print(model.dict2[Partie.wordIndex -1].charAt(i) + " ") ;
+			for (int i = 0; i < model.getMot().length(); i++) {
+				if (model.lvl.equals("facile")) {
+					System.out.print(model.dict[Partie.wordIndex - 1].charAt(i) + " ");
+				} else if (model.lvl.equals("meduim")) {
+					System.out.print(model.dict2[Partie.wordIndex - 1].charAt(i) + " ");
 
-			}else if(model.lvl.equals("dificile")) {
-				System.out.print(model.dict3[Partie.wordIndex -1].charAt(i) + " ") ;
-			}
+				} else if (model.lvl.equals("dificile")) {
+					System.out.print(model.dict3[Partie.wordIndex - 1].charAt(i) + " ");
+				}
 			}
 			System.out.println();
 			System.out.println("Mot suivant");
@@ -171,12 +175,12 @@ public class Console extends Vue implements Observer {
 		} else if ((model.getMess() == "termine") && (Partie.success != Partie.end)) {
 			System.out.println("VOUS AVEZ TROUVE " + Partie.success + " mot(s) sur " + Partie.end);
 		}
-		
-		if(model.getMess() != "termine") {
+
+		if (model.getMess() != "termine") {
 			this.afficher();
 
 		}
-		
+
 	}
 
 }

@@ -15,13 +15,14 @@ import java.util.List;
 
 /**
  * @author tresor
- * @params host : String : hote hebergent la BDD
- * @params user : String : utilisateur
- * @params passwd : String : mot de passe
- * @params Lib : HashMap : association mot et indice
- * @params Lib2 : HashMAP : association mot et definition
+ * host : String : hote hebergent la BDD
+ * user : String : utilisateur
+ * passwd : String : mot de passe
+ * Lib : HashMap : association mot et indice
+ * Lib2 : HashMAP : association mot et definition
  */
 public class Serveur {
+
 	int id;
 	String mot;
 	String signification;
@@ -46,6 +47,10 @@ public class Serveur {
 		this.lib2 = lib2;
 	}
 
+	/**
+	 * permet de sauvegarder les mots et le niveau de dificulte recupere depuis la
+	 * BDD
+	 */
 	HashMap<String, String> lib = new HashMap<String, String>();
 	HashMap<String, String> lib2 = new HashMap<String, String>();
 
@@ -57,6 +62,9 @@ public class Serveur {
 	final private String user = "sql7343279";
 	final private String passwd = "lm5ksRt97g";
 
+	/**
+	 * @throws Exception cette methode permet de recuperer les données depuis la BDD
+	 */
 	public void readDataBase() throws Exception {
 		try {
 			// Connexion a la BDD
@@ -115,6 +123,11 @@ public class Serveur {
 		}
 	}
 
+	/**
+	 * @param x : String [] : array contenant les mots a melanger cette methode
+	 *          permet de melanger les mots dans un arr
+	 */
+
 	public void shuffle(String[] x) {
 
 		List<String> stringList = Arrays.asList(x);
@@ -136,9 +149,9 @@ public class Serveur {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.dict = new String[this.getLib().size()/3];
-		this.dict2 = new String[this.getLib().size()/3];
-		this.dict3 = new String[this.getLib().size()/3];
+		this.dict = new String[this.getLib().size() / 3];
+		this.dict2 = new String[this.getLib().size() / 3];
+		this.dict3 = new String[this.getLib().size() / 3];
 
 		for (String i : this.getLib().keySet()) {
 
@@ -154,19 +167,18 @@ public class Serveur {
 				this.dict3[cnt3] = i;
 				++cnt3;
 			} else {
-				
+
 			}
 		}
 		this.shuffle(this.dict);
 		this.shuffle(this.dict2);
 		this.shuffle(this.dict3);
-		
+
 	}
 
 	public static void main(String[] args) throws Exception {
 		Serveur BDD = new Serveur();
 		BDD.initWord();
-	
 
 	}
 }

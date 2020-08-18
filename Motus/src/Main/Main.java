@@ -1,4 +1,6 @@
 /**
+ * @author tresor
+ * contains de main class.
  * 
  */
 package Main;
@@ -14,7 +16,6 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 		Partie model = new Partie();
 

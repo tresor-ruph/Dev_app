@@ -9,20 +9,49 @@ import vues.Gui;
 
 @SuppressWarnings("deprecation")
 public class Partie extends Observable {
-
+	/**
+	 * lvl : String : niveau de dificulte(facile, intermediare, dificile)
+	 *
+	 */
 	public String lvl = " ";
-	// public static int cpt = 60;
+	/**
+	 * nombre de tentative restant par tour
+	 */
 	public static int chance = 5;
+	/**
+	 * nombre de reussite
+	 */
 	public static int success = 0;
+	/**
+	 * 
+	 */
 	public static int total = 0;
-	public static int end = 5;
+	/**
+	 * nombre de tour total
+	 */
+	public static final int end = 5;
+
 	public static int wordIndex = 0;
+	/**
+	 * mot a deviner
+	 */
 	public String mot;
+	/**
+	 * arr contient les mot facile
+	 */
 	public String[] dict;
+	/**
+	 * array contient les mot intermediare
+	 */
 	public String[] dict2;
+	/**
+	 * array contient les mots dificile
+	 */
 	public String[] dict3;
 	public String mot2;
-	// public boolean verif = true;
+	/**
+	 * message a afficher a l'utilisateur
+	 */
 	public static String mess;
 	public static char[] index;
 	public static char[] index2;
@@ -35,10 +64,19 @@ public class Partie extends Observable {
 		this.dict3 = serv.dict3;
 	}
 
+	/**
+	 * recupere la valeur de chance
+	 *
+	 */
+
 	public static int getChance() {
 		return chance;
 	}
 
+	/**
+	 * incremente la variable chance
+	 *
+	 */
 	public static void setChance() {
 		Partie.chance = --chance;
 	}
@@ -59,6 +97,12 @@ public class Partie extends Observable {
 	public char[] getIndex2() {
 		return index2;
 	}
+
+	/**
+	 * @param i : int
+	 * @param j : int
+	 *
+	 */
 
 	public void setIndex2(int i, char j) {
 		Partie.index2[i] = j;
@@ -156,7 +200,6 @@ public class Partie extends Observable {
 		} else {
 			System.out.println("something went wrong");
 		}
-		System.out.println(this.lvl);
 		Partie.index = new char[this.getMot().length()];
 		Partie.index2 = new char[this.getMot().length()];
 
@@ -168,7 +211,6 @@ public class Partie extends Observable {
 	 * 
 	 */
 	public void word() {
-		int ctrl = 0;
 		this.setMess(" ");
 		for (int i = 0; i < this.getMot().length(); i++) {
 			if (this.getMot().toUpperCase().charAt(i) == this.getMot2().toUpperCase().charAt(i)) {
@@ -176,12 +218,11 @@ public class Partie extends Observable {
 
 			} else {
 				innerloop: for (int j = 0; j < this.getMot().length(); j++) {
-					if (this.getMot().toUpperCase().charAt(i) == this.getMot2().toUpperCase().charAt(j)) {
+					if (this.getMot().toUpperCase().charAt(j) == this.getMot2().toUpperCase().charAt(i)) {
 
 						this.setIndex2(i, this.getMot2().charAt(i));
 
 						break innerloop;
-						
 
 					}
 				}
@@ -230,7 +271,6 @@ public class Partie extends Observable {
 
 		}
 
-		
 	}
 
 }

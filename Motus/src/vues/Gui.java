@@ -19,8 +19,13 @@ import java.awt.event.ActionListener;
 
 @SuppressWarnings("deprecation")
 public class Gui extends Vue implements Observer, ActionListener {
-
+	/**
+	 * f : JFrame : fenettre du jeu
+	 */
 	JFrame f;
+	/**
+	 * f1 : JFrame : fenettre permettant de choisir le niveau de dificulte
+	 */
 	JFrame f1;
 	Panneau pan;
 	private JTextField field1;
@@ -37,6 +42,11 @@ public class Gui extends Vue implements Observer, ActionListener {
 	public static char arr2[][] = new char[5][6];
 	public static char arr3[][] = new char[5][6];
 
+	/**
+	 * @param model      : Partie
+	 * @param controleur : control
+	 *
+	 */
 	public Gui(Partie model, Controleur control) {
 		super(model, control);
 		this.home();
@@ -46,6 +56,9 @@ public class Gui extends Vue implements Observer, ActionListener {
 
 	}
 
+	/**
+	 * affiche et permet a l'utilisateur de choisir son niveau de dificulte
+	 */
 	public void home() {
 		f1 = new JFrame();
 		f1.setTitle("MOTUS");
@@ -71,12 +84,12 @@ public class Gui extends Vue implements Observer, ActionListener {
 
 		G1 = new ButtonGroup();
 
-		L1 = new JLabel("veuillez choisir votre niveau de dificulte");
+		L1 = new JLabel("veuillez choisir votre niveau de difficulte");
 
 		jRadioButton1.setText("Facile");
 
 		jRadioButton2.setText("Normal");
-		jRadioButton3.setText("dificile");
+		jRadioButton3.setText("difficile");
 		char1.setBounds(100, 50, 250, 48);
 		f1.add(char1);
 
@@ -159,9 +172,12 @@ public class Gui extends Vue implements Observer, ActionListener {
 		b.setBounds(293, 320, 50, 25);
 		f.getContentPane().add(b);
 		b.addActionListener(this);
+		JLabel point1 = new JLabel(modele.Partie.total + " sur " + modele.Partie.end);
+		point1.setBounds(143, 350, 250, 65);
+		f.getContentPane().add(point1);
 
-		JLabel point = new JLabel(modele.Partie.total + " mot(s) trouvé sur " + modele.Partie.end);
-		point.setBounds(143, 350, 250, 65);
+		JLabel point = new JLabel(modele.Partie.success + " mot(s) trouvé sur " + modele.Partie.end);
+		point.setBounds(143, 380, 250, 65);
 		f.getContentPane().add(point);
 		f.setVisible(true);
 	}
@@ -233,14 +249,11 @@ public class Gui extends Vue implements Observer, ActionListener {
 
 		if (model.getMess() == "reussi") {
 			if (model.getLvl().equals("facile")) {
-				JOptionPane.showMessageDialog(f,
-						"BINGO \n" + model.dict[Partie.wordIndex - 1].toUpperCase());
+				JOptionPane.showMessageDialog(f, "BINGO \n" + model.dict[Partie.wordIndex - 1].toUpperCase());
 			} else if (model.getLvl().equals("meduim")) {
-				JOptionPane.showMessageDialog(f,
-						"BINGO \n" + model.dict2[Partie.wordIndex - 1].toUpperCase());
+				JOptionPane.showMessageDialog(f, "BINGO \n" + model.dict2[Partie.wordIndex - 1].toUpperCase());
 			} else if (model.getLvl().equals("dificile")) {
-				JOptionPane.showMessageDialog(f,
-						"BINGO \n" + model.dict3[Partie.wordIndex - 1].toUpperCase());
+				JOptionPane.showMessageDialog(f, "BINGO \n" + model.dict3[Partie.wordIndex - 1].toUpperCase());
 			}
 		} else if (model.getMess() == "echouer") {
 			if (model.getLvl().equals("facile")) {
@@ -257,6 +270,8 @@ public class Gui extends Vue implements Observer, ActionListener {
 			if (Partie.success == Partie.end) {
 				JOptionPane.showMessageDialog(f, "FELICITATION !!!\n VOUS AVEZ TROUVER TOUT LES MOTS");
 			} else {
+				JOptionPane.showMessageDialog(f,
+						"LE MOT A DEVINER ETAIT \n" + model.dict3[Partie.wordIndex - 1].toUpperCase());
 
 				JOptionPane.showMessageDialog(f,
 						"FIN DE PARRTIE !!!\n" + "VOUS AVEZ TROUVER  " + Partie.success + "MOT(s) SUR  " + Partie.end);

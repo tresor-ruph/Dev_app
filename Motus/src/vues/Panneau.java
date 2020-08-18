@@ -5,7 +5,6 @@ package vues;
 
 import javax.imageio.ImageIO;
 
-
 /**
  * @author treso
  *
@@ -21,7 +20,6 @@ import java.io.IOException;
 @SuppressWarnings("serial")
 public class Panneau extends JPanel {
 
-	
 	public static int chancecnt = 1;
 	public String mot;
 
@@ -32,15 +30,18 @@ public class Panneau extends JPanel {
 	public char[][] char3;
 
 	/**
-	 * @param x : String : Mot a  definer par l'utilisateur
+	 * @param x  : String : Mot a definer par l'utilisateur
 	 * @param x2 : String : Mot entre par l'utilisateur;
 	 * @param x3 : String : message a afficher a l'utilisateur;
-	 * @param y : char[][] : array contenat chaque character du mot a definer.
-	 * L'emplacement de chaque character est bien precise
-	 * @param z : char[][] : array contenat chaque character present dans l'array index de la classe Partie.
-	 * L'emplacement de chaque character est precise et permet de mettre en evidence les character trouve par l'utilisateur
-	 * @param z2 : char[][] : array contenat chaque character de l'array index2 de la classee Partie.
-	 * L'emplacement de chaque character est bien precise
+	 * @param y  : char[][] : array contenat chaque character du mot a definer.
+	 *           L'emplacement de chaque character est bien precise
+	 * @param z  : char[][] : array contenat chaque character present dans l'array
+	 *           index de la classe Partie. L'emplacement de chaque character est
+	 *           precise et permet de mettre en evidence les character trouve par
+	 *           l'utilisateur
+	 * @param z2 : char[][] : array contenat chaque character de l'array index2 de
+	 *           la classee Partie. L'emplacement de chaque character est bien
+	 *           precise
 	 */
 	public Panneau(String x, String x2, String x3, char[][] y, char[][] z, char[][] z2) {
 		this.mot = x2;
